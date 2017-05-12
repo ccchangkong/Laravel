@@ -9,8 +9,22 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
-    return view('welcome');
+	// $name = 'Cc';
+	// return view('welcome')->with('name', $name);
+	// return view('welcome', ['name' => $name]);
+	$name = 'Cc';
+	$age = 18;
+	$sex = '男';
+	return view('welcome', compact('name', 'age', 'sex'));
+});
+Route::get('tasks', function () {
+	$tasks = DB::table('tasks')->latest()->get();
+	return view('tasks.index', compact('tasks'));
+});
+Route::get('tasks/{task}', function ($id) {
+	$task = DB::table('tasks')->find($id);
+	return view('tasks/show', compact('task'));
 });
